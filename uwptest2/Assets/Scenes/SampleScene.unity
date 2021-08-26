@@ -1169,6 +1169,8 @@ MonoBehaviour:
   ARList_category: []
   ARList_addrStreet: []
   object1: {fileID: 6023337378521613307, guid: 7e7be2f43673aef4183e2f25f08f7e02, type: 3}
+  lat: 
+  lng: 
   test1: {fileID: 0}
 --- !u!1 &1915621524
 GameObject:

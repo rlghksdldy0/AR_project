@@ -24,11 +24,13 @@ public class objecttest2 : MonoBehaviour
     [SerializeField] Text test2;
     int i = 0;
     public Image imagecast_shop;
-
+    public string imageUrl = "http://gotouch.iptime.org:18160/anydev/svc/data/file/arad/content/ad/1629951680659-1739.png";
     GpsTest4 gpstest4;
 
     double add_constant = 0;
     double multyple_constant = 0.01f;
+
+    public GameObject AR_prefab;
 
     private void request_ARListCaching() //프로그램 실행 후 최초 1회 정류장 리스트 캐싱
     { // 사이트에서 값 가져옴
@@ -114,6 +116,14 @@ public class objecttest2 : MonoBehaviour
 
         transform.position = new Vector3(nowLat, 0, nowLng);
         transform.localScale = new Vector3(1, 1, 1);
+        if (float.Parse(ARList_xCrdnt[i]) - 0.002f < double.Parse(gpstest4.lat) && float.Parse(ARList_xCrdnt[i]) + 0.002f > double.Parse(gpstest4.lat) && float.Parse(ARList_yCrdnt[i]) - 0.002f < double.Parse(gpstest4.lng) && float.Parse(ARList_yCrdnt[i]) + 0.002f > double.Parse(gpstest4.lng))
+        {
+            AR_prefab.SetActive(true);
+        }
+        else
+        {
+            AR_prefab.SetActive(false);
+        }
     }
 
     private void Start()
@@ -139,15 +149,15 @@ public class objecttest2 : MonoBehaviour
 
 
                 //fileDownload("http://gotouch.iptime.org:18160/anydev/svc/data/file/arad/content/ad/1629792267386-1420.png", Application.persistentDataPath + "test" + i + ".png"); // 안드로이드 리소스폴더에 저장
-                string path_cat = Application.persistentDataPath + "test" + i + ".png"; // 다운받은 사진 불러오기
-                                                                                        // string path_cat = @"D:\New Unity Project\" + "testt" + i + ".png"; // 다운받은 사진 불러오기
-                Texture2D texture_cat = new Texture2D(0, 0);
-                byte[] byteTexture_cat = System.IO.File.ReadAllBytes(path_cat); // 불러온 사진 byte값으로 변환
+                //string path_cat = Application.persistentDataPath + "test" + i + ".png"; // 다운받은 사진 불러오기
+                // string path_cat = @"D:\New Unity Project\" + "testt" + i + ".png"; // 다운받은 사진 불러오기
+                //Texture2D texture_cat = new Texture2D(0, 0);
+                //byte[] byteTexture_cat = System.IO.File.ReadAllBytes(path_cat); // 불러온 사진 byte값으로 변환
 
-                texture_cat = new Texture2D(110, 110); // 크기지정
-                texture_cat.LoadImage(byteTexture_cat); // 이미지로 로드
-                imagecast_shop.sprite = Sprite.Create(texture_cat, new Rect(0, 0, 110, 110), new Vector2()); // sprite형식으로 표출
-
+                //texture_cat = new Texture2D(110, 110); // 크기지정
+                //texture_cat.LoadImage(byteTexture_cat); // 이미지로 로드
+                //imagecast_shop.sprite = Sprite.Create(texture_cat, new Rect(0, 0, 110, 110), new Vector2()); // sprite형식으로 표출
+                StartCoroutine("WebDownload");
 
 
                 test1.text = ARList_Name[i].ToString(); // 리스트로 불러온 텍스트값 표출
@@ -248,4 +258,11 @@ public class objecttest2 : MonoBehaviour
     }
 
     */
+
+    IEnumerator WebDownload()
+    {
+        WWW webimage = new WWW(imageUrl);
+        yield return webimage;
+        imagecast_shop.material.mainTexture = webimage.texture;
+    }
 }

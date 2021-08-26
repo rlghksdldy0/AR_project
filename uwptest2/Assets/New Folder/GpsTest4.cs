@@ -218,7 +218,7 @@ public class GpsTest4 : MonoBehaviour
 	{
 		//gpsmanager = GameObject.Find("ARCamera").GetComponent<GPSManager>();
 		request_stationListCaching();
-		InvokeRepeating("out_Info", 0.5f, 0.5f);
+		InvokeRepeating("out_Info", 2f, 2f);
 
 
 		m_WebSocket = new WebSocket("ws://220.117.107.150:8000/");
